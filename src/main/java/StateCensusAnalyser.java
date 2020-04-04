@@ -15,8 +15,8 @@ public class StateCensusAnalyser {
         stateCensusAnalyser.loadData();
     }
     private static final String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-    public void loadData() throws IOException{
-
+    public int loadData() throws IOException{
+        int totalRecords=0;
             try(Reader reader = newBufferedReader(Paths.get(DATA_CSV_FILE_PATH)); ){
                 CsvToBean<CSVStateCensus> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                         .withType(CSVStateCensus.class)
@@ -31,7 +31,9 @@ public class StateCensusAnalyser {
                     System.out.println("AreaInSquareKm: " + csvStateCensus.getAreaInSqKm());
                     System.out.println("DensityPerSquareKm: " + csvStateCensus.getDensityPerSqKm());
                     System.out.println("----------------------------");
+                    totalRecords++;
                 }
             }
+            return totalRecords;
         }
 }
