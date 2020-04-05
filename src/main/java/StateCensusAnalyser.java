@@ -9,19 +9,16 @@ import java.util.Iterator;
 import static java.nio.file.Files.newBufferedReader;
 
 public class StateCensusAnalyser {
+    public static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
 
-    public static void main(String[] args) throws IOException,StateCensusAnalyserException {
-        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(DATA_CSV_FILE_PATH);
-        stateCensusAnalyser.loadData();
+    public static void main(String[] args) throws StateCensusAnalyserException {
+        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+        stateCensusAnalyser.loadData(DATA_CSV_FILE_PATH);
     }
-    private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-    public StateCensusAnalyser(String path) {
 
-        this.DATA_CSV_FILE_PATH=path;
-    }
-    public int loadData() throws IOException, StateCensusAnalyserException {
+    public int loadData(String FILE_PATH) throws StateCensusAnalyserException {
         int totalRecords=0;
-            try(Reader reader = newBufferedReader(Paths.get(DATA_CSV_FILE_PATH)); ){
+            try(Reader reader = newBufferedReader(Paths.get(FILE_PATH)); ){
                 CsvToBean<CSVStateCensus> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                         .withType(CSVStateCensus.class)
                         .withIgnoreLeadingWhiteSpace(true)
@@ -39,6 +36,9 @@ public class StateCensusAnalyser {
                 }
             }catch (IOException e) {
                 throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
+            }
+            catch (RuntimeException e) {
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
             }
             return totalRecords;
         }

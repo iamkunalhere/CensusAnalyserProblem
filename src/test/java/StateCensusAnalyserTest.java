@@ -6,32 +6,40 @@ public class StateCensusAnalyserTest {
     private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
     private static String IMPROPER_FILE_NAME = "./src/test/resources/stateensusata.csv";
     private static String IMPROPER_FILE_TYPE = "./src/test/resources/StateCensusData.txt";
-
-
+    private static String WRONG_FILE = "./src/test/resources/StateCensusDataWrongFormat.csv";
     @Test
-    public void totalRecordsFromCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, IOException {
-        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(DATA_CSV_FILE_PATH);
-        int totalRecords =  stateCensusAnalyser.loadData();
+    public void totalRecordsFromCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException {
+        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+        int totalRecords =  stateCensusAnalyser.loadData(DATA_CSV_FILE_PATH);
         Assert.assertEquals(29,totalRecords);
     }
     @Test
-    public void givenFileName_whenImproper_shouldThrowException() throws IOException {
+    public void givenFileName_whenImproper_shouldThrowException() {
         try {
-            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(IMPROPER_FILE_NAME);
-            stateCensusAnalyser.loadData();
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadData(IMPROPER_FILE_NAME);
         }
         catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND,e.exceptionTypeObject);
         }
     }
     @Test
-    public void givenFileType_whenIncorrect_shouldThrowException() throws IOException {
+    public void givenFileType_whenIncorrect_shouldThrowException() {
         try {
-            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(IMPROPER_FILE_TYPE);
-            stateCensusAnalyser.loadData();
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadData(IMPROPER_FILE_TYPE);
         }
         catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND,e.exceptionTypeObject);
+        }
+    }
+    @Test
+    public void givenFileData_whenIncorrect_shouldThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadData(WRONG_FILE);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE,e.exceptionTypeObject);
         }
     }
 }
