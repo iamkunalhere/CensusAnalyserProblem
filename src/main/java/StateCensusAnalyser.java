@@ -10,12 +10,16 @@ import static java.nio.file.Files.newBufferedReader;
 
 public class StateCensusAnalyser {
 
-    public static void main(String[] args) throws IOException {
-        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+    public static void main(String[] args) throws IOException,StateCensusAnalyserException {
+        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(DATA_CSV_FILE_PATH);
         stateCensusAnalyser.loadData();
     }
-    private static final String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-    public int loadData() throws IOException{
+    private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+    public StateCensusAnalyser(String path) {
+
+        this.DATA_CSV_FILE_PATH=path;
+    }
+    public int loadData() throws IOException, StateCensusAnalyserException {
         int totalRecords=0;
             try(Reader reader = newBufferedReader(Paths.get(DATA_CSV_FILE_PATH)); ){
                 CsvToBean<CSVStateCensus> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
@@ -33,7 +37,10 @@ public class StateCensusAnalyser {
                     System.out.println("----------------------------");
                     totalRecords++;
                 }
+            }catch (IOException e) {
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
             }
             return totalRecords;
         }
-}
+    }
+
