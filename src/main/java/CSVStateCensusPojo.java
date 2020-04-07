@@ -1,6 +1,6 @@
 import com.opencsv.bean.CsvBindByName;
 
-public class CSVStateCensus {
+public class CSVStateCensusPojo {
     @CsvBindByName(column = "State")
     private String State;
     @CsvBindByName(column = "Population")
@@ -10,9 +10,7 @@ public class CSVStateCensus {
     @CsvBindByName(column = "DensityPerSqKm")
     private String DensityPerSqKm;
 
-    public String getState() {
-        return State;
-    }
+    public String getState() { return State; }
     public void setState(String state) {
         this.State = state;
     }
@@ -34,4 +32,5 @@ public class CSVStateCensus {
     public void setDensityPerSqKm(String densityPerSqKm) {
         DensityPerSqKm = densityPerSqKm;
     }
+
 }
