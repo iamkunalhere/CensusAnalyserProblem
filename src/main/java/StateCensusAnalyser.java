@@ -5,40 +5,31 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 import static java.nio.file.Files.newBufferedReader;
 
 public class StateCensusAnalyser {
 
     public int loadIndianCensusData(String csvFilePath) throws StateCensusAnalyserException {
-        int totalRecords = 0;
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
             Iterator<CSVStateCensusPojo> csvStateCensusIterator = this.getFileIterator(reader,CSVStateCensusPojo.class);
-            while (csvStateCensusIterator.hasNext()) {
-                csvStateCensusIterator.next();
-                totalRecords++;
-            }
+            return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
         } catch (RuntimeException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
-        return totalRecords;
     }
     public int loadStateCodes(String csvFilePath) throws StateCensusAnalyserException {
-        int totalRecords = 0;
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
             Iterator<CSVStateCodePojo> csvStateCensusIterator = this.getFileIterator(reader,CSVStateCodePojo.class);
-            while (csvStateCensusIterator.hasNext()) {
-                csvStateCensusIterator.next();
-                totalRecords++;
-            }
+            return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
         } catch (RuntimeException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
-        return totalRecords;
     }
     public <E> Iterator<E> getFileIterator(Reader reader, Class<E> csvClass) throws StateCensusAnalyserException {
         try {
@@ -52,4 +43,11 @@ public class StateCensusAnalyser {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
+    private <E> int getCount(Iterator<E> iterator)
+    {
+        Iterable<E> iterable = () -> iterator;
+        int totalRecords = (int) StreamSupport.stream(iterable.spliterator(), false).count();
+        return totalRecords;
+    }
+
 }
