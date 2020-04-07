@@ -13,7 +13,8 @@ public class StateCensusAnalyser {
 
     public int loadIndianCensusData(String csvFilePath) throws StateCensusAnalyserException {
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
-            Iterator<CSVStateCensusPojo> csvStateCensusIterator = new CSVBuilder().getFileIterator(reader,CSVStateCensusPojo.class);
+            ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
+            Iterator<CSVStateCensusPojo> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCensusPojo.class);
             return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
@@ -23,7 +24,8 @@ public class StateCensusAnalyser {
     }
     public int loadStateCodes(String csvFilePath) throws StateCensusAnalyserException {
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
-            Iterator<CSVStateCodePojo> csvStateCensusIterator = new CSVBuilder().getFileIterator(reader,CSVStateCodePojo.class);
+            ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
+            Iterator<CSVStateCodePojo> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCodePojo.class);
             return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
