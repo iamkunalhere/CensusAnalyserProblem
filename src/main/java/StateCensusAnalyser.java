@@ -17,9 +17,9 @@ public class StateCensusAnalyser {
             Iterator<CSVStateCensusPojo> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCensusPojo.class);
             return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
-            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
-        } catch (RuntimeException e) {
-            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
+            throw new StateCensusAnalyserException(e.getMessage(),StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
+        } catch (CSVBuilderException e) {
+            throw new StateCensusAnalyserException(e.getMessage(),e.type.name());
         }
     }
     public int loadStateCodes(String csvFilePath) throws StateCensusAnalyserException {
@@ -28,9 +28,9 @@ public class StateCensusAnalyser {
             Iterator<CSVStateCodePojo> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCodePojo.class);
             return this.getCount(csvStateCensusIterator);
         } catch (IOException e) {
-            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
-        } catch (RuntimeException e) {
-            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
+            throw new StateCensusAnalyserException(e.getMessage(),StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
+        } catch (CSVBuilderException e) {
+            throw new StateCensusAnalyserException(e.getMessage(),e.type.name());
         }
     }
     private <E> int getCount(Iterator<E> iterator) {

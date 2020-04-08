@@ -5,7 +5,7 @@ import java.io.Reader;
 import java.util.Iterator;
 
 public class CSVBuilder implements ICSVBuilder{
-    public <E> Iterator<E> getFileIterator(Reader reader, Class<E> csvClass) throws StateCensusAnalyserException {
+    public <E> Iterator<E> getFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
         try {
             CsvToBeanBuilder csvToBeanBuilder = new CsvToBeanBuilder(reader);
             csvToBeanBuilder.withType(csvClass);
@@ -14,7 +14,7 @@ public class CSVBuilder implements ICSVBuilder{
             return csvToBean.iterator();
         }
         catch (RuntimeException e) {
-            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
+            throw new CSVBuilderException(e.getMessage(),StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
 }
