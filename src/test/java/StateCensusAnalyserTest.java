@@ -2,13 +2,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class StateCensusAnalyserTest {
-    private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-    private static String IMPROPER_FILE_NAME = "./src/test/resources/stateensusata.csv";
-    private static String IMPROPER_FILE_TYPE = "./src/test/resources/StateCensusData.txt";
-    private static String WRONG_FILE = "./src/test/resources/StateCensusDataWrongFormat.csv";
+    private static final String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+    private static final String IMPROPER_FILE_NAME = "./src/test/resources/stateensusata.csv";
+    private static final String IMPROPER_FILE_TYPE = "./src/test/resources/StateCensusData.txt";
+    private static final String WRONG_FILE = "./src/test/resources/StateCensusDataWrongFormat.csv";
 
-    private static String STATE_CODE_FILE = "./src/test/resources/StateCode.csv";
-    private static String WRONG_STATE_CODE_FILE = "./src/test/resources/StateCodeWrongFormat.csv";
+    private static final String STATE_CODE_FILE = "./src/test/resources/StateCode.csv";
+    private static final String WRONG_STATE_CODE_FILE = "./src/test/resources/StateCodeWrongFormat.csv";
 
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
     // test to ensure no of records matches of StateCensusData.csv
@@ -43,7 +43,7 @@ public class StateCensusAnalyserTest {
         try {
             stateCensusAnalyser.loadIndianCensusData(WRONG_FILE);
         } catch (StateCensusAnalyserException e) {
-            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
+            Assert.assertEquals(e.exceptionTypeObject,StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
     // test to ensure no of records matches of StateCode.csv
