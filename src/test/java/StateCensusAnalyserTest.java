@@ -86,7 +86,7 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
     }
-    // test to check census data is sorted in Json format
+    // test to check census data is sorted in Json format according to State name
     @Test
     public void givenStateCensusData_whenSortedOnStates_shouldReturnSortedResult() {
         try {
@@ -95,6 +95,19 @@ public class StateCensusAnalyserTest {
             CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
             Assert.assertEquals("Andhra Pradesh", csvStateCensusPojo[0].getState());
             Assert.assertEquals("West Bengal",csvStateCensusPojo[28].getState());
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
+        }
+    }
+    // test to check census data is sorted in Json format according to State code
+    @Test
+    public void givenStateCodeData_whenSortedOnStates_shouldReturnSortedResult() {
+        try {
+            stateCensusAnalyser.loadStateCodes(STATE_CODE_FILE);
+            String sortedStateCodeData = stateCensusAnalyser.getSortedStateCodeData();
+            CSVStateCodePojo[] csvStateCodePojo = new Gson().fromJson(sortedStateCodeData, CSVStateCodePojo[].class);
+            Assert.assertEquals("AD", csvStateCodePojo[0].getStateCode());
+            Assert.assertEquals("WB",csvStateCodePojo[36].getStateCode());
         } catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
