@@ -2,7 +2,7 @@ public class StateCensusAnalyserException extends Exception{
 
     public enum exceptionType {
         FILE_NOT_FOUND,
-        INCORRECT_FILE
+        NO_CENSUS_DATA, INCORRECT_FILE
     }
     exceptionType exceptionTypeObject;
     public StateCensusAnalyserException(String message, String name) {

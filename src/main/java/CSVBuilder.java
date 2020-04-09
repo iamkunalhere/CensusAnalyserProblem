@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CSVBuilder implements ICSVBuilder{
+    @Override
     public <E> Iterator<E> getFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
         return this.getCSVBean(reader,csvClass).iterator();
     }
