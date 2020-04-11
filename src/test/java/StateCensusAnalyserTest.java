@@ -12,14 +12,12 @@ public class StateCensusAnalyserTest {
     private static final String WRONG_STATE_CODE_FILE = "./src/test/resources/StateCodeWrongFormat.csv";
 
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-
     // test to ensure no of records matches of StateCensusData.csv
     @Test
     public void totalRecordsFromCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException {
         int totalRecords = stateCensusAnalyser.loadIndianCensusData(DATA_CSV_FILE_PATH);
         Assert.assertEquals(29, totalRecords);
     }
-
     // test to check if StateCensusData file is incorrect
     @Test
     public void givenFileName_whenImproper_shouldThrowException() {
@@ -29,7 +27,6 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
         }
     }
-
     // test to check if StateCensusData file is correct but type is incorrect
     @Test
     public void givenFileType_whenIncorrect_shouldThrowException() {
@@ -39,7 +36,6 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
         }
     }
-
     // test to check if StateCensusData file is correct but Header and Delimiter is incorrect
     @Test
     public void givenFileData_whenIncorrect_shouldThrowException() {
@@ -49,14 +45,12 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(e.exceptionTypeObject, StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
-
     // test to ensure no of records matches of StateCode.csv
     @Test
     public void totalRecordsFrom_StateCodeCSVFile_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException {
         int totalRecords = stateCensusAnalyser.loadStateCodes(STATE_CODE_FILE);
         Assert.assertEquals(37, totalRecords);
     }
-
     // test to check if StateCensusData file is incorrect
     @Test
     public void givenStateCodeCSVFileName_whenImproper_shouldThrowException() {
@@ -66,7 +60,6 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
         }
     }
-
     // test to check if StateCensusData file is correct but type is incorrect
     @Test
     public void givenStateCodeCSVFileType_whenIncorrect_shouldThrowException() {
@@ -76,7 +69,6 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
         }
     }
-
     // test to check if StateCensusData file is correct but Header and Delimiter is incorrect
     @Test
     public void givenStateCodeCSVFileData_whenIncorrect_shouldThrowException() {

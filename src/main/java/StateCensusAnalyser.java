@@ -71,6 +71,7 @@ public class StateCensusAnalyser <E>{
         String stateCensusSortedJson = new Gson().toJson(csvStateCensusFileList);
         return stateCensusSortedJson;
     }
+
     public String getSortedStateCodeData() throws StateCensusAnalyserException {
         if (csvStateCodeFileList.size() == 0 | csvStateCodeFileList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
