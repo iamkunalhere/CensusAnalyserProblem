@@ -112,4 +112,16 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
     }
+    // test to check census data is sorted in Json format according to State name
+    @Test
+    public void givenStateCensusPopulationData_whenSortedOnStates_shouldReturnSortedResult() throws CSVBuilderException {
+        try {
+            stateCensusAnalyser.loadIndianCensusData(DATA_CSV_FILE_PATH);
+            String sortedStateCensusData = stateCensusAnalyser.getSortedStatePopulationData();
+            CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
+            Assert.assertEquals(199812341, csvStateCensusPojo[0].getPopulation());
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
+        }
+    }
 }
