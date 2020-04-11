@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+
 import static java.nio.file.Files.newBufferedReader;
 
 public class StateCensusAnalyser <E>{
@@ -17,12 +18,11 @@ public class StateCensusAnalyser <E>{
     public int loadIndianCensusData(String csvFilePath) throws StateCensusAnalyserException, CSVBuilderException {
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
-            Iterator<CSVStateCensusDAO> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCensusDAO.class);
-            while (csvStateCensusIterator.hasNext()) {
-                CSVStateCensusDAO value = csvStateCensusIterator.next();
-                this.csvMap.put(value.state,value);
-                csvList = csvMap.values().stream().collect(Collectors.toList());
-            }
+            Iterator<CSVStateCensusPojo> csvStateCensusIterator = icsvBuilder.getFileIterator(reader,CSVStateCensusPojo.class);
+            Iterable<CSVStateCensusPojo> stateCensusIterable = () -> csvStateCensusIterator;
+            StreamSupport.stream(stateCensusIterable.spliterator(), false)
+                    .forEach(stateCensusCSV -> csvMap.put(stateCensusCSV.getState(), new CSVStateCensusDAO(stateCensusCSV)));
+            csvList = csvMap.values().stream().collect(Collectors.toList());
             int totalRecords = csvMap.size();
             return totalRecords;
             } catch (IOException e) {
@@ -37,12 +37,11 @@ public class StateCensusAnalyser <E>{
     public int loadStateCodes(String csvFilePath) throws StateCensusAnalyserException, CSVBuilderException {
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
-            Iterator<CSVStateCensusDAO> csvStateCodeIterator = icsvBuilder.getFileIterator(reader,CSVStateCensusDAO.class);
-            while (csvStateCodeIterator.hasNext()) {
-                CSVStateCensusDAO value = csvStateCodeIterator.next();
-                this.csvMap.put(value.stateCode,value);
-                csvList = csvMap.values().stream().collect(Collectors.toList());
-            }
+            Iterator<CSVStateCodePojo> csvStateCodeIterator = icsvBuilder.getFileIterator(reader,CSVStateCodePojo.class);
+            Iterable<CSVStateCodePojo> stateCodeIterable = () -> csvStateCodeIterator;
+            StreamSupport.stream(stateCodeIterable.spliterator(), false)
+                    .filter(stateDataCSV -> csvMap.get(stateDataCSV.getStateCode()) != null)
+                    .forEach(stateDataCSV -> csvMap.get(stateDataCSV.getStateCode()).stateCode = stateDataCSV.getStateCode());
             int totalRecords = csvMap.size();
             return totalRecords;
         } catch (IOException e) {
