@@ -10,7 +10,9 @@ public class CSVStateCensusPojo {
     @CsvBindByName(column = "DensityPerSqKm")
     private String DensityPerSqKm;
 
-    public String getState() { return State; }
+    public String getState() {
+        return State;
+    }
     public void setState(String state) {
         this.State = state;
     }
