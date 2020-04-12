@@ -25,7 +25,6 @@ public class StateCensusAnalyser <E>{
         csvList = csvMap.values().stream().collect(Collectors.toList());
         return csvMap.size();
     }
-
     public int loadStateCodes(String csvFilePath) throws StateCensusAnalyserException, CSVBuilderException {
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
@@ -44,12 +43,6 @@ public class StateCensusAnalyser <E>{
             throw new StateCensusAnalyserException(e.getMessage(),StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
-    private <E> int getCount(Iterator<E> iterator) {
-        Iterable<E> iterable = () -> iterator;
-        int totalRecords = (int) StreamSupport.stream(iterable.spliterator(), false).count();
-        return totalRecords;
-    }
-
     public String getSortedStateCensusData() throws StateCensusAnalyserException {
         if (csvList.size() == 0 | csvList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
@@ -59,7 +52,6 @@ public class StateCensusAnalyser <E>{
         String stateCensusSortedJson = new Gson().toJson(csvList);
         return stateCensusSortedJson;
     }
-
     public String getSortedStateCodeData() throws StateCensusAnalyserException {
         if (csvList.size() == 0 | csvList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
@@ -96,7 +88,6 @@ public class StateCensusAnalyser <E>{
         String stateCensusSortedJson = new Gson().toJson(csvList);
         return stateCensusSortedJson;
     }
-
     private<E> void sort(Comparator<CSVStateCensusDAO> comparator) {
         for (int i = 0; i < csvList.size(); i++) {
             for (int j = 0; j < csvList.size() - i - 1; j++) {
@@ -110,6 +101,5 @@ public class StateCensusAnalyser <E>{
             }
         }
     }
-
     public enum SortingMode {POPULATION, AREA, DENSITY, STATE}
 }
