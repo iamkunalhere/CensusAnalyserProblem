@@ -15,6 +15,7 @@ public class CSVStateCensusDAO {
         stateName = indiaCensusCSV.getState();
     }
     public CSVStateCensusDAO(CSVStateCodePojo indiaCensusCSV) {
+
         stateCode = indiaCensusCSV.getStateCode();
     }
     public CSVStateCensusDAO(CSVUSCensusPojo usCensusCSV){
