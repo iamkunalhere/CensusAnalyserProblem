@@ -11,11 +11,13 @@ public class StateCensusAnalyserTest {
     private static final String STATE_CODE_FILE = "./src/test/resources/StateCode.csv";
     private static final String WRONG_STATE_CODE_FILE = "./src/test/resources/StateCodeWrongFormat.csv";
 
+    private static final String US_CSV_FILE_PATH = "./src/test/resources/USCensusData.csv";
+
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
     // test to ensure no of records matches of StateCensusData.csv
     @Test
-    public void totalRecordsFromCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, CSVBuilderException {
+    public void givenTotalRecordsFromCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, CSVBuilderException {
         try {
             int totalRecords = stateCensusAnalyser.loadIndianCensusData(DATA_CSV_FILE_PATH);
             Assert.assertEquals(29, totalRecords);
@@ -50,7 +52,7 @@ public class StateCensusAnalyserTest {
     }
     // test to ensure no of records matches of StateCode.csv
     @Test
-    public void totalRecordsFrom_StateCodeCSVFile_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, CSVBuilderException {
+    public void givenTotalRecordsFrom_StateCodeCSVFile_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, CSVBuilderException {
         try {
             int totalRecords = stateCensusAnalyser.loadStateCodes(STATE_CODE_FILE);
             Assert.assertEquals(37, totalRecords);
@@ -147,5 +149,13 @@ public class StateCensusAnalyserTest {
         } catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
+    }
+    // test to ensure no of records matches of USCensusData.csv
+    @Test
+    public void givenTotalRecordsFromUSCSV_whenMatched_shouldReturnTrue() throws StateCensusAnalyserException, CSVBuilderException {
+        try {
+            int totalRecords = stateCensusAnalyser.loadUSCensusData(US_CSV_FILE_PATH);
+            Assert.assertEquals(51, totalRecords);
+        } catch (StateCensusAnalyserException e) {        }
     }
 }

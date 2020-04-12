@@ -52,6 +52,31 @@ public class StateCensusAnalyser <E>{
             throw new StateCensusAnalyserException(e.getMessage(),StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
     }
+    public int loadUSCensusData(String csvFilePath) throws StateCensusAnalyserException {
+        int totalRecords = 0;
+        try (Reader reader = newBufferedReader(Paths.get(csvFilePath))){
+            ICSVBuilder icsvBuilder = CSVBuilderFactory.icsvBuilder();
+            Iterator<CSVUSCensusPojo> csvUSCensusIterator = icsvBuilder.getFileIterator(reader,CSVUSCensusPojo.class);
+            while (csvUSCensusIterator.hasNext()) {
+                CSVUSCensusPojo USCensus = csvUSCensusIterator.next();
+                System.out.println("State ID: " + USCensus.StateID);
+                System.out.println("State Name : " + USCensus.State);
+                System.out.println("Area : " + USCensus.Area);
+                System.out.println("Housing units : " + USCensus.HousingUnits);
+                System.out.println("Water area : " + USCensus.WaterArea);
+                System.out.println("Land Area : " + USCensus.LandArea);
+                System.out.println("Density : " + USCensus.PopulationDensity);
+                System.out.println("Population : " + USCensus.Population);
+                System.out.println("Housing Density : " + USCensus.HousingDensity);
+                totalRecords++;
+            }
+            return totalRecords;
+        } catch (IOException e) {
+            throw new StateCensusAnalyserException(e.getMessage(),StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
+        } catch (CSVBuilderException e) {
+            throw new  StateCensusAnalyserException(e.getMessage(),e.type);
+        }
+    }
 
     private <E> int getCount(Iterator<E> iterator) {
         Iterable<E> iterable = () -> iterator;
@@ -63,7 +88,7 @@ public class StateCensusAnalyser <E>{
         if (csvList.size() == 0 | csvList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
         }
-        Comparator<CSVStateCensusDAO> comparator = Comparator.comparing(census -> census.state);
+        Comparator<CSVStateCensusDAO> comparator = Comparator.comparing(census -> census.stateName);
         this.sort(comparator);
         String stateCensusSortedJson = new Gson().toJson(csvList);
         return stateCensusSortedJson;

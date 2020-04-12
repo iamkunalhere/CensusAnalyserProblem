@@ -1,5 +1,5 @@
 public class CSVStateCensusDAO {
-    public String state;
+    public String stateName;
     public int densityPerSqKm;
     public int areaInSqKm;
     public int population;
@@ -9,7 +9,7 @@ public class CSVStateCensusDAO {
         densityPerSqKm = indiaCensusCSV.getDensityPerSqKm();
         areaInSqKm = indiaCensusCSV.getAreaInSqKm();
         population = indiaCensusCSV.getPopulation();
-        state = indiaCensusCSV.getState();
+        stateName = indiaCensusCSV.getState();
     }
     public CSVStateCensusDAO(CSVStateCodePojo indiaCensusCSV) {
         stateCode = indiaCensusCSV.getStateCode();
