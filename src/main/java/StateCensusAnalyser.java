@@ -110,4 +110,6 @@ public class StateCensusAnalyser <E>{
             }
         }
     }
+
+    public enum SortingMode {POPULATION, AREA, DENSITY, STATE}
 }
