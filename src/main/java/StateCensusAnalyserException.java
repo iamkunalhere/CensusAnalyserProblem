@@ -4,7 +4,8 @@ public class StateCensusAnalyserException extends Exception{
         FILE_NOT_FOUND,
         NO_CENSUS_DATA,
         INCORRECT_FILE,
-        UNABLE_TO_PARSE
+        UNABLE_TO_PARSE,
+        INVALID_COUNTRY
     }
     exceptionType exceptionTypeObject;
     public StateCensusAnalyserException(String message, String name) {

@@ -8,13 +8,13 @@ public class CSVUSCensusPojo {
     public String State;
 
     @CsvBindByName(column = "Population Density")
-    public String PopulationDensity;
+    public int PopulationDensity;
 
     @CsvBindByName(column = "Population")
-    public String Population;
+    public long Population;
 
     @CsvBindByName(column = "Total area")
-    public String Area;
+    public long Area;
 
     @CsvBindByName(column = "Housing units")
     public String HousingUnits;
@@ -26,5 +26,5 @@ public class CSVUSCensusPojo {
     public String LandArea;
 
     @CsvBindByName(column = "Housing Density")
-    public String HousingDensity;
+    public float HousingDensity;
 }
