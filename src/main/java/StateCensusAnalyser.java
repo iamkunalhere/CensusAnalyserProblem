@@ -78,7 +78,7 @@ public class StateCensusAnalyser <E>{
         String stateCensusSortedJson = new Gson().toJson(csvList);
         return stateCensusSortedJson;
     }
-    public String getSortedStateDensityWiseData() throws StateCensusAnalyserException {
+    public String getSortedStateDensityWiseData(SortingMode density) throws StateCensusAnalyserException {
         if (csvList.size() == 0 | csvList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
         }
@@ -87,7 +87,7 @@ public class StateCensusAnalyser <E>{
         String stateCensusSortedJson = new Gson().toJson(csvList);
         return stateCensusSortedJson;
     }
-    public String getSortedStateAreaWiseData() throws StateCensusAnalyserException {
+    public String getSortedStateAreaWiseData(SortingMode area) throws StateCensusAnalyserException {
         if (csvList.size() == 0 | csvList == null) {
             throw new StateCensusAnalyserException("No Census Data",StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
         }

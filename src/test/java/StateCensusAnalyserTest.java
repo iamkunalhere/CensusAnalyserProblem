@@ -131,7 +131,7 @@ public class StateCensusAnalyserTest {
     public void givenStateCensusData_whenSortedOnDensityWise_shouldReturnSortedResult() throws CSVBuilderException {
         try {
             stateCensusAnalyser.loadStateCensusCSVData(StateCensusAnalyser.Country.INDIA,DATA_CSV_FILE_PATH);
-            String sortedStateCensusData = stateCensusAnalyser.getSortedStateDensityWiseData();
+            String sortedStateCensusData = stateCensusAnalyser.getSortedStateDensityWiseData(StateCensusAnalyser.SortingMode.DENSITY);
             CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
             Assert.assertEquals(1102, csvStateCensusPojo[0].getDensityPerSqKm());
         } catch (StateCensusAnalyserException e) {
@@ -143,7 +143,7 @@ public class StateCensusAnalyserTest {
     public void givenStateCensusData_whenSortedOnAreaWise_shouldReturnSortedResult() throws CSVBuilderException {
         try {
             stateCensusAnalyser.loadStateCensusCSVData(StateCensusAnalyser.Country.INDIA,DATA_CSV_FILE_PATH);
-            String sortedStateCensusData = stateCensusAnalyser.getSortedStateAreaWiseData();
+            String sortedStateCensusData = stateCensusAnalyser.getSortedStateAreaWiseData(StateCensusAnalyser.SortingMode.AREA);
             CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
             Assert.assertEquals(342239, csvStateCensusPojo[0].getAreaInSqKm());
         } catch (StateCensusAnalyserException e) {
@@ -170,4 +170,29 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
     }
+    // test to check US census data is sorted in Json format according to Density Wise
+    @Test
+    public void givenUSStateCensusData_whenSortedOnDensityWise_shouldReturnSortedResult() throws CSVBuilderException {
+        try {
+            stateCensusAnalyser.loadStateCensusCSVData(StateCensusAnalyser.Country.US,US_CSV_FILE_PATH);
+            String sortedStateCensusData = stateCensusAnalyser.getSortedStateDensityWiseData(StateCensusAnalyser.SortingMode.DENSITY);
+            CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
+            Assert.assertEquals(3805, csvStateCensusPojo[0].getDensityPerSqKm());
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
+        }
+    }
+    // test to check US census data is sorted in Json format according to Area Wise
+    @Test
+    public void givenUSStateCensusData_whenSortedOnAreaWise_shouldReturnSortedResult() throws CSVBuilderException {
+        try {
+            stateCensusAnalyser.loadStateCensusCSVData(StateCensusAnalyser.Country.US,US_CSV_FILE_PATH);
+            String sortedStateCensusData = stateCensusAnalyser.getSortedStateAreaWiseData(StateCensusAnalyser.SortingMode.AREA);
+            CSVStateCensusPojo[] csvStateCensusPojo = new Gson().fromJson(sortedStateCensusData, CSVStateCensusPojo[].class);
+            Assert.assertEquals(1723338, csvStateCensusPojo[0].getAreaInSqKm());
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
+        }
+    }
+
 }
