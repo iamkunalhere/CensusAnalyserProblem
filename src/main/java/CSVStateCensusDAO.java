@@ -20,7 +20,7 @@ public class CSVStateCensusDAO {
     public CSVStateCensusDAO(CSVUSCensusPojo usCensusCSV){
         this.StateID = usCensusCSV.StateID;
         this.State = usCensusCSV.State;
-        this.population = (int) usCensusCSV.Population;
+        this.population = (int) usCensusCSV.population;
         this.areaInSqKm= (int) usCensusCSV.Area;
         this.densityPerSqKm = usCensusCSV.PopulationDensity;
         this.HousingDensity = usCensusCSV.HousingDensity;

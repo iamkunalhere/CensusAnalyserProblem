@@ -11,7 +11,7 @@ public class CSVUSCensusPojo {
     public int PopulationDensity;
 
     @CsvBindByName(column = "Population")
-    public long Population;
+    public long population;
 
     @CsvBindByName(column = "Total area")
     public long Area;
